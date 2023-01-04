@@ -1,2 +1,2 @@
 #!/bin/bash
-print('Hello ALX')
+python3 $PYFILE
