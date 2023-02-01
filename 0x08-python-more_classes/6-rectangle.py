@@ -1,62 +1,105 @@
 #!/usr/bin/python3
+
+'''module: rectangle
+this module contains the class Rectangle ...
+'''
+
+
 class Rectangle:
+    '''class: Rectangle
+    this is Rectangle class
+    '''
+
     number_of_instances = 0
 
     def __init__(self, width=0, height=0):
-        if not isinstance(width, int) or not isinstance(height, int):
-            wrong = "width" if not isinstance(width, int) else "height"
-            raise TypeError(wrong + " must be an integer")
-        if height < 0 or width < 0:
-            wrong = "width" if width < 0 else "height"
-            raise ValueError(wrong + " must be >= 0")
+        '''method: __init__
+        initialize instance of class
+        '''
+        Rectangle.number_of_instances += 1
         self.__width = width
         self.__height = height
-        Rectangle.number_of_instances += 1
-
-    def __str__(self):
-        if self.__width > 0 and self.__height > 0:
-            return ("\n".join(["".join(["#"
-                               for y in range(self.__width)])
-                               for x in range(self.__height)]))
-        else:
-            return ("")
-
-    def __repr__(self):
-        return ("Rectangle({:d}, {:d})".format(self.__width, self.__height))
-
-    def __del__(self):
-        Rectangle.number_of_instances -= 1
-        print("Bye rectangle...")
 
     @property
     def width(self):
-        return(self.__width)
+        '''method: set_width
+        getter
+        '''
+        if (not isinstance(self.__width, int)) or isinstance(self.__width,
+                                                             bool):
+            raise TypeError("width must be an integer")
+        if self.__width < 0:
+            raise ValueError("width must be >= 0")
+        return self.__width
 
     @width.setter
-    def width(self, value):
-        if not isinstance(value, int):
+    def width(self, width):
+        '''method set_width
+        '''
+        if not isinstance(self.__width, int) or isinstance(self.__width, bool):
             raise TypeError("width must be an integer")
-        if value < 0:
+        if self.__width < 0:
             raise ValueError("width must be >= 0")
-        self.__width = value
+        self.__width = width
 
     @property
     def height(self):
-        return(self.__height)
+        '''method: set_height
+        getter
+        '''
+        if (not isinstance(self.__height, int)) or isinstance(self.__height,
+                                                              bool):
+            raise TypeError("height must be an integer")
+        if self.__height < 0:
+            raise ValueError("height must be >= 0")
+        return self.__height
 
     @height.setter
-    def height(self, value):
-        if not isinstance(value, int):
+    def height(self, height):
+        '''setter
+        '''
+        if not isinstance(self.__height, int) or isinstance(self.__height,
+                                                            bool):
             raise TypeError("height must be an integer")
-        if value < 0:
+        if self.__height < 0:
             raise ValueError("height must be >= 0")
-        self.__height = value
+        self.__height = height
 
     def area(self):
-        return(self.__width * self.__height)
+        '''method area of rectangle
+        '''
+        return self.__height * self.__width
 
     def perimeter(self):
-        if self.__width > 0 and self.__height > 0:
-            return(self.__width * 2 + self.__height * 2)
-        else:
-            return (0)
+        '''method return perimeter of perimeter
+        '''
+        if self.__height == 0 or self.width == 0:
+            return 0
+        return (self.__height + self.width) * 2
+
+    def __str__(self):
+        '''method: __str__
+        return nice string rectangle
+        '''
+        ret_str = ""
+        if self.__height == 0 or self.__width == 0:
+            return ""
+        for idx in range(self.__height):
+            ret_str += '#' * self.width
+            if idx + 1 < self.__height:
+                ret_str += '\n'
+        return ret_str
+
+    def __repr__(self):
+        '''method: __repr__ create new object
+        '''
+        ret_str = "Rectangle(" + str(self.__width) + ","
+        ret_str += str(self.__height) + ")"
+        return ret_str
+
+    def __del__(self):
+        '''method: __del__
+           deletes instance, prints "bye" message
+        '''
+        Rectangle.number_of_instances -= 1
+        print("Bye rectangle...")
